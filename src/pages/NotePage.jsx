@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { MdArrowBackIosNew } from "react-icons/md";
+
 
 const NotePage = () => {
   const params = useParams();
@@ -12,10 +14,10 @@ const NotePage = () => {
   }, [noteID]);
 
   async function getNote(noteID) {
-    const {data} = await axios.get(
+    const { data } = await axios.get(
       `http://localhost:8000/myquicknotes/notes/${noteID}/`
     );
-   
+
     setNote(data);
   }
   // async function getNote(noteID) {
@@ -35,8 +37,16 @@ const NotePage = () => {
   // };
 
   return (
-    <div>
-      <p>{note?.body}</p>
+    <div className="note">
+      <div className="note-header">
+      <h3>
+          <Link to={"/"}>
+            <MdArrowBackIosNew />
+          </Link>
+        </h3>
+
+      </div>
+      <textarea defaultValue={note?.body}></textarea>
     </div>
   );
 };
