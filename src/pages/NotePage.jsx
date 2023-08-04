@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdArrowBackIosNew } from "react-icons/md";
 
-
 const NotePage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   let noteID = params.id;
   let [note, setNote] = useState(null);
 
@@ -13,6 +13,7 @@ const NotePage = () => {
     getNote(noteID);
   }, [noteID]);
 
+  // 1
   async function getNote(noteID) {
     const { data } = await axios.get(
       `http://localhost:8000/myquicknotes/notes/${noteID}/`
@@ -20,6 +21,7 @@ const NotePage = () => {
 
     setNote(data);
   }
+  // 2
   // async function getNote(noteID) {
   //   let response = await fetch(
   //     `http://localhost:8000/myquicknotes/notes/${noteID}/`
@@ -28,6 +30,7 @@ const NotePage = () => {
   //   setNote(data);
   // }
 
+  // 3
   // const getNote = async () => {
   //   let response = await fetch(
   //     `http://localhost:8000/myquicknotes/notes/${noteID}/`
@@ -36,17 +39,33 @@ const NotePage = () => {
   //   setNote(data);
   // };
 
+  async function updateNote(noteID) {
+    axios.put(
+      `http://localhost:8000/myquicknotes/notes/${noteID}/update`,
+      note
+    );
+    navigate("/");
+  }
+
+  async function deleteNote(noteID) {
+    axios.delete(`http://localhost:8000/myquicknotes/notes/${noteID}/delete`);
+    navigate("/");
+  }
+
   return (
     <div className="note">
       <div className="note-header">
-      <h3>
-          <Link to={"/"}>
-            <MdArrowBackIosNew />
-          </Link>
+        <h3>
+          <MdArrowBackIosNew onClick={() => updateNote(noteID)} />
         </h3>
-
+        <button onClick={() => deleteNote(noteID)}>Delete</button>
       </div>
-      <textarea defaultValue={note?.body}></textarea>
+      <textarea
+        onChange={(e) => {
+          setNote({ ...note, body: e.target.value });
+        }}
+        defaultValue={note?.body}
+      ></textarea>
     </div>
   );
 };
