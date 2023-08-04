@@ -1,4 +1,4 @@
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import "./App.css";
 import NotesListPage from "./pages/NotesListPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -7,12 +7,14 @@ import NotePage from "./pages/NotePage";
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<NotesListPage />} />
-          <Route path="/note/:id" element={<NotePage />} />
-        </Routes>
+      <div className="container dark">
+        <div className="app">
+          {/* <Header /> */}
+          <Routes>
+            <Route path="/" element={<NotesListPage />} />
+            <Route path="/note/:id" element={<NotePage />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
