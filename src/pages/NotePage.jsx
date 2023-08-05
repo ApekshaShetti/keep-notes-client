@@ -15,6 +15,7 @@ const NotePage = () => {
 
   // 1
   async function getNote(noteID) {
+    if (noteID === "new") return;
     const { data } = await axios.get(
       `http://localhost:8000/myquicknotes/notes/${noteID}/`
     );
@@ -40,31 +41,61 @@ const NotePage = () => {
   // };
 
   async function updateNote(noteID) {
-    axios.put(
+    await axios.put(
       `http://localhost:8000/myquicknotes/notes/${noteID}/update`,
       note
     );
     navigate("/");
   }
 
-  async function deleteNote(noteID) {
-    axios.delete(`http://localhost:8000/myquicknotes/notes/${noteID}/delete`);
+  async function createNote() {
+    await axios.post(`http://localhost:8000/myquicknotes/notes/create`, note);
     navigate("/");
   }
+
+  async function deleteNote(noteID) {
+    await axios.delete(
+      `http://localhost:8000/myquicknotes/notes/${noteID}/delete`
+    );
+    navigate("/");
+  }
+
+  const handleSubmit = (noteID) => {
+    if (noteID === "new") {
+      if (note?.body.length) {
+        createNote();
+      }
+    } else {
+      if (note.body.length) {
+        updateNote(noteID);
+      } else {
+        deleteNote(noteID);
+      }
+    }
+    navigate("/");
+  };
+
+  let handleChange = (value) => {
+    setNote((note) => ({ ...note, body: value }));
+  };
 
   return (
     <div className="note">
       <div className="note-header">
         <h3>
-          <MdArrowBackIosNew onClick={() => updateNote(noteID)} />
+          <MdArrowBackIosNew onClick={() => handleSubmit(noteID)} />
         </h3>
-        <button onClick={() => deleteNote(noteID)}>Delete</button>
+        {noteID !== "new" ? (
+          <button onClick={() => deleteNote(noteID)}>Delete</button>
+        ) : (
+          <button onClick={createNote}>Create</button>
+        )}
       </div>
       <textarea
         onChange={(e) => {
-          setNote({ ...note, body: e.target.value });
+          handleChange(e.target.value);
         }}
-        defaultValue={note?.body}
+        value={note?.body ?? ""}
       ></textarea>
     </div>
   );
