@@ -23,7 +23,7 @@ const NotePage = () => {
   // 2
   // async function getNote(noteID) {
   //   let response = await fetch(
-  //     `http://localhost:8000/myquicknotes/notes/${noteID}/`
+  //     `myquicknotes/notes/${noteID}/`
   //   );
   //   let data = await response.json();
   //   setNote(data);
@@ -32,7 +32,7 @@ const NotePage = () => {
   // 3
   // const getNote = async () => {
   //   let response = await fetch(
-  //     `http://localhost:8000/myquicknotes/notes/${noteID}/`
+  //     `/myquicknotes/notes/${noteID}/`
   //   );
   //   let data = await response.json();
   //   setNote(data);
