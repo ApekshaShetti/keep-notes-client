@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { MdArrowBackIosNew } from "react-icons/md";
+import { api } from "../utils/axios";
 
 const NotePage = () => {
   const params = useParams();
@@ -16,9 +16,7 @@ const NotePage = () => {
   // 1
   async function getNote(noteID) {
     if (noteID === "new") return;
-    const { data } = await axios.get(
-      `http://localhost:8000/myquicknotes/notes/${noteID}/`
-    );
+    const { data } = await api.get(`/myquicknotes/notes/${noteID}/`);
 
     setNote(data);
   }
@@ -41,22 +39,17 @@ const NotePage = () => {
   // };
 
   async function updateNote(noteID) {
-    await axios.put(
-      `http://localhost:8000/myquicknotes/notes/${noteID}/update`,
-      note
-    );
+    await api.put(`/myquicknotes/notes/${noteID}/update`, note);
     navigate("/");
   }
 
   async function createNote() {
-    await axios.post(`http://localhost:8000/myquicknotes/notes/create`, note);
+    await api.post(`/myquicknotes/notes/create`, note);
     navigate("/");
   }
 
   async function deleteNote(noteID) {
-    await axios.delete(
-      `http://localhost:8000/myquicknotes/notes/${noteID}/delete`
-    );
+    await api.delete(`/myquicknotes/notes/${noteID}/delete`);
     navigate("/");
   }
 
