@@ -5,9 +5,15 @@ import { api } from "../utils/axios";
 
 const NotesListPage = () => {
   let [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getNotes();
+    setLoading(true);
+    getNotes()
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   let getNotes = async () => {
@@ -23,9 +29,11 @@ const NotesListPage = () => {
         <p className="notes-count">{notes.length}</p>
       </div>
       <div className="notes-list">
-        {notes.map((note, index) => (
-          <ListItem key={index} note={note} />
-        ))}
+        {loading ? (
+          <div className="loader">Loading...</div>
+        ) : (
+          notes.map((note, index) => <ListItem key={index} note={note} />)
+        )}
       </div>
       <AddButton />
     </div>

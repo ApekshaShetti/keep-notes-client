@@ -8,9 +8,15 @@ const NotePage = () => {
   const navigate = useNavigate();
   let noteID = params.id;
   let [note, setNote] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getNote(noteID);
+    setLoading(true);
+    getNote(noteID)
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
   }, [noteID]);
 
   // 1
@@ -59,7 +65,7 @@ const NotePage = () => {
         createNote();
       }
     } else {
-      if (note.body.length) {
+      if (note?.body.length) {
         updateNote(noteID);
       } else {
         deleteNote(noteID);
@@ -84,12 +90,16 @@ const NotePage = () => {
           <button onClick={createNote}>Create</button>
         )}
       </div>
-      <textarea
-        onChange={(e) => {
-          handleChange(e.target.value);
-        }}
-        value={note?.body ?? ""}
-      ></textarea>
+      {loading ? (
+        <div className="loader">Loading...</div>
+      ) : (
+        <textarea
+          onChange={(e) => {
+            handleChange(e.target.value);
+          }}
+          value={note?.body ?? ""}
+        ></textarea>
+      )}
     </div>
   );
 };
