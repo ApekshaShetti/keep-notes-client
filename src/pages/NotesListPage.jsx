@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ListItem from "../components/ListItem";
 import AddButton from "../components/AddButton";
+import { api } from "../utils/axios";
 
 const NotesListPage = () => {
   let [notes, setNotes] = useState([]);
@@ -10,9 +11,9 @@ const NotesListPage = () => {
   }, []);
 
   let getNotes = async () => {
-    let response = await fetch("/myquicknotes/notes/");
-    let data = await response.json();
-    setNotes(data);
+    let response = await api.get("/myquicknotes/notes/");
+    // let data = await response.json();
+    setNotes(response.data);
   };
 
   return (
