@@ -9,6 +9,8 @@ const NotesListPage = () => {
   let [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { email, username } = JSON.parse(localStorage.getItem("user"));
+  // const email = user.email;
 
   useEffect(() => {
     setLoading(true);
@@ -20,7 +22,7 @@ const NotesListPage = () => {
   }, []);
 
   let getNotes = async () => {
-    let response = await api.get("/myquicknotes/notes/");
+    let response = await api.get(`/myquicknotes/notes/${email}/all`);
     // let data = await response.json();
     setNotes(response.data);
   };
@@ -34,11 +36,12 @@ const NotesListPage = () => {
       <div className="notes-header">
         <h2 className="notes-title">&#9782; Quick Notes</h2>
         {/* <p className="notes-count">{notes.length}</p> */}
-        <p className="logout">
+        <div className="logout">
           <div onClick={handleLogout}>
-            <RiLogoutBoxRLine />
+            {username}
+            <RiLogoutBoxRLine style={{ width: 20, height: 20 }} />
           </div>
-        </p>
+        </div>
       </div>
       <div className="notes-list">
         {loading ? (
