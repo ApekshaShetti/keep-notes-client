@@ -284,4 +284,11 @@ a {
 
 .logout {
   color: var(--color-main);
+  cursor: pointer;
+}
+
+.logout > div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }

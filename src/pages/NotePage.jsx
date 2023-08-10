@@ -9,6 +9,8 @@ const NotePage = () => {
   let noteID = params.id;
   let [note, setNote] = useState(null);
   const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user.email;
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +24,7 @@ const NotePage = () => {
   // 1
   async function getNote(noteID) {
     if (noteID === "new") return;
-    const { data } = await api.get(`/myquicknotes/notes/${noteID}/`);
+    const { data } = await api.get(`/myquicknotes/note/${noteID}/`);
 
     setNote(data);
   }
@@ -50,7 +52,7 @@ const NotePage = () => {
   }
 
   async function createNote() {
-    await api.post(`/myquicknotes/notes/create`, note);
+    await api.post(`/myquicknotes/notes/create`, { ...note, email });
     navigate("/");
   }
 
