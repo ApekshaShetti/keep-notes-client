@@ -1,8 +1,7 @@
-# React + Vite
+## Server Repository
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+For the backend of this project, check out our server repository:
 
-Currently, two official plugins are available:
+- [Server Repository](https://github.com/ApekshaShetti/Keep-Notes-Server): This repository contains the server-side code and logic that complements the client-side functionality.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Feel free to explore the server code to better understand how the entire system works!
