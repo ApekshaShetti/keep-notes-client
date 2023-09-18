@@ -90,7 +90,7 @@ const Register = () => {
       if (error.response) {
         // Server responded with an error status code
         if (error.response.status === 400) {
-          setError("Invalid input. Please check your details.");
+          setError("Please choose a strong password.");
         } else if (error.response.status === 409) {
           setError(
             "Username or email already exists. Please choose a different one."
